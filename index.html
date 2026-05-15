@@ -3,491 +3,675 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The Aging Parent Admin Toolkit — ReadyFileStudio</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<title>Aging Parent Admin Toolkit — ReadyFileStudio</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:system-ui,-apple-system,sans-serif;background:#f7f5f2;color:#1a1a1a;padding:24px 20px 60px;max-width:900px;margin:0 auto;}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: Georgia, 'Times New Roman', serif;
+  background: #f5f2ec;
+  color: #2c2c2c;
+  min-height: 100vh;
+}
+
+/* HEADER */
+.header {
+  background: #2d4a35;
+  color: #f5f2ec;
+  padding: 18px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.header-brand { font-size: 13px; letter-spacing: 2px; text-transform: uppercase; opacity: 0.75; }
+.header-title { font-size: 20px; font-weight: normal; letter-spacing: 1px; }
+.header-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+.btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: Georgia, serif;
+  font-size: 13px;
+  transition: opacity 0.2s;
+}
+.btn:hover { opacity: 0.85; }
+.btn-outline {
+  background: transparent;
+  border: 1px solid rgba(245,242,236,0.5);
+  color: #f5f2ec;
+}
+.btn-solid {
+  background: #c8a96e;
+  color: #2d4a35;
+  font-weight: bold;
+}
+
+/* NAV TABS */
+.nav {
+  background: #3a5c44;
+  padding: 0 28px;
+  display: flex;
+  overflow-x: auto;
+  gap: 0;
+  scrollbar-width: none;
+}
+.nav::-webkit-scrollbar { display: none; }
+
+.nav-tab {
+  padding: 14px 18px;
+  color: rgba(245,242,236,0.65);
+  font-size: 13px;
+  cursor: pointer;
+  white-space: nowrap;
+  border-bottom: 3px solid transparent;
+  transition: all 0.2s;
+  background: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  font-family: Georgia, serif;
+  letter-spacing: 0.5px;
+}
+.nav-tab:hover { color: #f5f2ec; }
+.nav-tab.active {
+  color: #f5f2ec;
+  border-bottom: 3px solid #c8a96e;
+}
+
+/* MAIN */
+.main { max-width: 860px; margin: 0 auto; padding: 32px 24px 60px; }
+
+/* SECTION */
+.section { display: none; }
+.section.visible { display: block; }
+
+/* WELCOME BANNER */
+.welcome-banner {
+  background: #2d4a35;
+  color: #f5f2ec;
+  border-radius: 8px;
+  padding: 36px 40px;
+  margin-bottom: 28px;
+  text-align: center;
+}
+.welcome-banner h1 { font-size: 26px; font-weight: normal; margin-bottom: 8px; letter-spacing: 1px; }
+.welcome-banner p { opacity: 0.8; font-size: 15px; line-height: 1.6; }
+.welcome-banner .tagline { margin-top: 16px; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; opacity: 0.6; }
+
+/* CARDS */
+.card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 28px 32px;
+  margin-bottom: 20px;
+  border: 1px solid #e8e2d8;
+}
+.card-title {
+  font-size: 16px;
+  color: #2d4a35;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e8e2d8;
+}
+
+/* FORM ROWS */
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+.field-row.single { grid-template-columns: 1fr; }
+.field-row.triple { grid-template-columns: 1fr 1fr 1fr; }
+
+.field label {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #8a7a68;
+  margin-bottom: 5px;
+}
+.field input,
+.field textarea,
+.field select {
+  width: 100%;
+  padding: 9px 12px;
+  border: 1px solid #ddd8cf;
+  border-radius: 4px;
+  font-family: Georgia, serif;
+  font-size: 14px;
+  color: #2c2c2c;
+  background: #faf9f7;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.field input:focus,
+.field textarea:focus,
+.field select:focus { border-color: #2d4a35; background: #fff; }
+.field textarea { resize: vertical; min-height: 72px; }
+
+/* TABLES */
+.tbl {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  margin-top: 10px;
+}
+.tbl th {
+  background: #2d4a35;
+  color: #f5f2ec;
+  padding: 10px 12px;
+  text-align: left;
+  font-weight: normal;
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.tbl td {
+  padding: 4px;
+  border-bottom: 1px solid #eee;
+}
+.tbl td input {
+  width: 100%;
+  border: none;
+  background: transparent;
+  font-family: Georgia, serif;
+  font-size: 14px;
+  padding: 6px 8px;
+  color: #2c2c2c;
+  outline: none;
+}
+.tbl td input:focus { background: #fdf9f4; }
+.tbl tr:last-child td { border-bottom: none; }
+.tbl tr:hover td { background: #faf9f7; }
+
+/* CHECKLIST */
+.checklist { list-style: none; margin-top: 10px; }
+.checklist li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 9px 0;
+  border-bottom: 1px solid #f0ebe2;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.checklist li:last-child { border-bottom: none; }
+.checklist li input[type="checkbox"] {
+  width: 17px;
+  height: 17px;
+  margin-top: 2px;
+  flex-shrink: 0;
+  accent-color: #2d4a35;
+  cursor: pointer;
+}
+
+/* NOTES */
+.note-box {
+  background: #f9f6f0;
+  border-left: 3px solid #c8a96e;
+  padding: 14px 18px;
+  border-radius: 0 6px 6px 0;
+  font-size: 14px;
+  color: #5a4e3e;
+  line-height: 1.6;
+  margin-top: 16px;
+}
+
+/* SECTION INTRO */
+.section-intro {
+  font-size: 14px;
+  color: #7a6e5e;
+  line-height: 1.7;
+  margin-bottom: 22px;
+}
+
+/* FOOTER */
+.footer {
+  text-align: center;
+  padding: 24px;
+  font-size: 11px;
+  color: #aaa;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+@media (max-width: 600px) {
+  .field-row { grid-template-columns: 1fr; }
+  .field-row.triple { grid-template-columns: 1fr; }
+  .header { flex-direction: column; align-items: flex-start; }
+  .main { padding: 20px 16px 40px; }
+  .card { padding: 20px 18px; }
+}
 </style>
 </head>
 <body>
 
-<h2 class="sr-only">The Aging Parent Admin Toolkit — 8 printable documents with working print and download buttons.</h2>
-<style>
-*{box-sizing:border-box;}
-.nav{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:1.2rem;padding-bottom:1rem;border-bottom:0.5px solid #e8e8e8;}
-.nav-btn{font-size:12px;padding:5px 12px;border:0.5px solid #d0d0d0;border-radius:99px;background:transparent;color:#666666;cursor:pointer;white-space:nowrap;}
-.nav-btn:hover,.nav-btn.active{background:#E1F5EE;color:#0F6E56;border-color:#5DCAA5;}
-.doc{display:none;}
-.doc.visible{display:block;}
-.doc-header{border-bottom:2px solid #1D9E75;padding-bottom:10px;margin-bottom:1.2rem;display:flex;justify-content:space-between;align-items:flex-end;}
-.doc-title{font-size:17px;font-weight:500;color:#1a1a1a;margin:0;}
-.doc-brand{font-size:11px;color:#1D9E75;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;}
-.sh{font-size:11px;font-weight:500;color:#0F6E56;text-transform:uppercase;letter-spacing:0.07em;background:#E1F5EE;padding:4px 10px;border-radius:4px;margin:1.1rem 0 0.6rem;}
-.fg{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin-bottom:0.7rem;}
-.f{border-bottom:1px solid #d0d0d0;padding-bottom:4px;}
-.fl{font-size:11px;color:#666666;margin-bottom:2px;}
-.fv{height:22px;width:100%;outline:none;}.fv:focus,.fa:focus{background:#f0faf6;border-bottom-color:#1D9E75;}
-.fa{height:44px;width:100%;border-bottom:1px solid #d0d0d0;}
-table.t{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:0.9rem;}
-table.t th{background:#E1F5EE;color:#085041;font-weight:500;padding:5px 7px;text-align:left;border:0.5px solid #9FE1CB;}
-table.t td{padding:5px 7px;border:0.5px solid #e8e8e8;height:28px;vertical-align:middle;outline:none;}table.t td:focus{background:#f0faf6;box-shadow:inset 0 0 0 1px #1D9E75;}
-table.t tr:nth-child(even) td{background:#f7f7f7;}
-.ci{display:flex;align-items:flex-start;gap:10px;padding:7px 0;border-bottom:0.5px solid #e8e8e8;}
-.ci:last-child{border-bottom:none;}
-.cb{width:15px;height:15px;border:1.5px solid #d0d0d0;border-radius:3px;flex-shrink:0;margin-top:2px;cursor:pointer;accent-color:#1D9E75;}
-.ct{font-size:13px;color:#1a1a1a;flex:1;line-height:1.5;}
-.cs{font-size:11px;color:#666666;margin-top:2px;display:flex;flex-wrap:wrap;align-items:center;gap:4px;}
-.cs-input{font-size:11px;border:none;border-bottom:1px solid #d0d0d0;background:transparent;color:#1a1a1a;padding:1px 2px;outline:none;font-family:inherit;}
-.cs-input:focus{border-bottom-color:#1D9E75;background:#f0faf6;}
-.nb{background:#f7f7f7;border-radius:8px;padding:9px 12px;font-size:12px;color:#666666;margin:0.8rem 0;line-height:1.6;}
-.nb-g{background:#E1F5EE;color:#085041;}
-.df{margin-top:1.2rem;padding-top:8px;border-top:0.5px solid #e8e8e8;display:flex;justify-content:space-between;}
-.ft{font-size:11px;color:#666666;}
-.toolbar{display:flex;gap:8px;margin-bottom:1rem;flex-wrap:wrap;}
-.tbtn{font-size:12px;padding:6px 14px;border:0.5px solid #d0d0d0;border-radius:8px;background:transparent;color:#1a1a1a;cursor:pointer;display:flex;align-items:center;gap:5px;}
-.tbtn:hover{background:#f7f7f7;}
-.tbtn-dl{border-color:#1D9E75;color:#0F6E56;}
-.tbtn-dl:hover{background:#E1F5EE;}
-.cr{width:100%;text-align:center;font-size:10px;color:#aaa;margin-top:6px;padding-top:6px;border-top:0.5px solid #e8e8e8;line-height:1.6;}
-</style>
-
-<div style="padding:0.5rem 0 1rem;">
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:8px;">
-    <div>
-      <div style="font-size:16px;font-weight:500;color:#1a1a1a;">The Aging Parent Admin Toolkit</div>
-      <div style="font-size:12px;color:#666666;">8 documents — view, print, or download each one</div>
-    </div>
-    <button class="tbtn tbtn-dl" id="dl-all" onclick="downloadPDF()"><i class="ti ti-file-type-pdf" aria-hidden="true" style="font-size:14px;"></i>Download as PDF</button>
+<!-- HEADER -->
+<div class="header">
+  <div>
+    <div class="header-brand">ReadyFileStudio</div>
+    <div class="header-title">Aging Parent Admin Toolkit</div>
   </div>
-
-  <div class="nav" id="nav">
-    <button class="nav-btn active" data-idx="0">1. Emergency sheet</button>
-    <button class="nav-btn" data-idx="1">2. Medical history</button>
-    <button class="nav-btn" data-idx="2">3. Medication log</button>
-    <button class="nav-btn" data-idx="3">4. Provider directory</button>
-    <button class="nav-btn" data-idx="4">5. Legal &amp; financial</button>
-    <button class="nav-btn" data-idx="5">6. Appointment notes</button>
-    <button class="nav-btn" data-idx="6">7. Sibling care log</button>
-    <button class="nav-btn" data-idx="7">8. Quick-start guide</button>
-  </div>
-
-  <div class="toolbar">
-    <button class="tbtn" onclick="printDoc()"><i class="ti ti-printer" aria-hidden="true" style="font-size:14px;"></i>Print this document</button>
-    <button class="tbtn tbtn-dl" onclick="downloadDocPDF()"><i class="ti ti-file-type-pdf" aria-hidden="true" style="font-size:14px;"></i>Save as PDF</button>
-  </div>
-
-  <div id="doc0" class="doc visible">
-    <div class="doc-header"><div class="doc-title">Emergency information sheet</div><div class="doc-brand">Aging Parent Admin Toolkit</div></div>
-    <div class="nb"><i class="ti ti-alert-circle" aria-hidden="true" style="margin-right:6px;"></i>Keep one printed copy at home, one in your wallet, and share digitally with all family caregivers.</div>
-    <div class="sh">Personal identification</div>
-    <div class="fg">
-      <div class="f"><div class="fl">Full legal name</div><div class="fv" contenteditable="true" spellcheck="false"></div></div>
-      <div class="f"><div class="fl">Date of birth</div><div class="fv" contenteditable="true" spellcheck="false"></div></div>
-      <div class="f"><div class="fl">SSN (last 4 digits only)</div><div class="fv" contenteditable="true" spellcheck="false"></div></div>
-      <div class="f"><div class="fl">Blood type</div><div class="fv" contenteditable="true" spellcheck="false"></div></div>
-      <div class="f"><div class="fl">Home address</div><div class="fv" contenteditable="true" spellcheck="false"></div></div>
-      <div class="f"><div class="fl">Primary language</div><div class="fv" contenteditable="true" spellcheck="false"></div></div>
-    </div>
-    <div class="sh">Emergency contacts</div>
-    <div class="fg">
-      <div class="f"><div class="fl">Contact 1 — name &amp; relationship</div><div class="fv" contenteditable="true" spellcheck="false"></div></div>
-      <div class="f"><div class="fl">Contact 1 — phone</div><div class="fv" contenteditable="true" spellcheck="false"></div></div>
-      <div class="f"><div class="fl">Contact 2 — name &amp; relationship</div><div class="fv" contenteditable="true" spellcheck="false"></div></div>
-      <div class="f"><div class="fl">Contact 2 — phone</div><div class="fv" contenteditable="true" spellcheck="false"></div></div>
-    </div>
-    <div class="sh">Medical snapshot</div>
-    <div class="fg">
-      <div class="f"><div class="fl">Primary care physician</div><div class="fv" contenteditable="true" spellcheck="false"></div></div>
-      <div class="f"><div class="fl">PCP phone</div><div class="fv" contenteditable="true" spellcheck="false"></div></div>
-      <div class="f"><div class="fl">Health insurance carrier</div><div class="fv" contenteditable="true" spellcheck="false"></div></div>
-      <div class="f"><div class="fl">Insurance member ID</div><div class="fv" contenteditable="true" spellcheck="false"></div></div>
-      <div class="f"><div class="fl">Known drug allergies</div><div class="fv" contenteditable="true" spellcheck="false"></div></div>
-      <div class="f"><div class="fl">Critical conditions</div><div class="fv" contenteditable="true" spellcheck="false"></div></div>
-    </div>
-    <div class="sh">Legal directives</div>
-    <div class="fg">
-      <div class="f"><div class="fl">DNR on file? (yes / no / location)</div><div class="fv" contenteditable="true" spellcheck="false"></div></div>
-      <div class="f"><div class="fl">Healthcare proxy / POA name</div><div class="fv" contenteditable="true" spellcheck="false"></div></div>
-      <div class="f"><div class="fl">Healthcare proxy phone</div><div class="fv" contenteditable="true" spellcheck="false"></div></div>
-      <div class="f"><div class="fl">Living will location</div><div class="fv" contenteditable="true" spellcheck="false"></div></div>
-    </div>
-    <div class="df"><div class="ft">Last updated: ___________<div class="cr">© ReadyFileStudio · For personal use only · Redistribution, resale, or public sharing is prohibited · readyfilestudio-toolkit1.vercel.app</div></div><div class="ft">Page 1 of 1</div></div>
-  </div>
-
-  <div id="doc1" class="doc">
-    <div class="doc-header"><div class="doc-title">Medical history tracker</div><div class="doc-brand">Aging Parent Admin Toolkit</div></div>
-    <div class="sh">Diagnoses &amp; chronic conditions</div>
-    <table class="t"><thead><tr><th style="width:30%">Condition</th><th style="width:18%">Year diagnosed</th><th style="width:27%">Treating specialist</th><th>Notes / status</th></tr></thead><tbody>
-    <tr><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr><tr><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr><tr><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr><tr><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr><tr><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr><tr><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr>
-    </tbody></table>
-    <div class="sh">Surgical &amp; procedure history</div>
-    <table class="t"><thead><tr><th style="width:35%">Procedure / surgery</th><th style="width:20%">Date</th><th style="width:25%">Hospital / facility</th><th>Surgeon</th></tr></thead><tbody>
-    <tr><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr><tr><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr><tr><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr><tr><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr>
-    </tbody></table>
-    <div class="sh">Allergies</div>
-    <table class="t"><thead><tr><th>Substance / medication</th><th>Reaction</th><th>Severity</th></tr></thead><tbody>
-    <tr><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr><tr><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr><tr><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr>
-    </tbody></table>
-    <div class="sh">Vaccinations</div>
-    <table class="t"><thead><tr><th>Vaccine</th><th>Date received</th><th>Due for booster</th><th>Location given</th></tr></thead><tbody>
-    <tr><td contenteditable="true" spellcheck="false">Flu shot</td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false">Annually</td><td contenteditable="true" spellcheck="false"></td></tr>
-    <tr><td contenteditable="true" spellcheck="false">COVID-19 (latest)</td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr>
-    <tr><td contenteditable="true" spellcheck="false">Shingrix</td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr>
-    <tr><td contenteditable="true" spellcheck="false">Pneumonia (PPSV23)</td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr>
-    <tr><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr>
-    </tbody></table>
-    <div class="df"><div class="ft">Parent name: ___________________ &nbsp; Last updated: ___________<div class="cr">© ReadyFileStudio · For personal use only · Redistribution, resale, or public sharing is prohibited · readyfilestudio-toolkit1.vercel.app</div></div><div class="ft">Page 1 of 1</div></div>
-  </div>
-
-  <div id="doc2" class="doc">
-    <div class="doc-header"><div class="doc-title">Medication management log</div><div class="doc-brand">Aging Parent Admin Toolkit</div></div>
-    <div class="nb"><i class="ti ti-pill" aria-hidden="true" style="margin-right:6px;"></i>Bring this log to every doctor and pharmacy visit. Update immediately when medications change.</div>
-    <div class="sh">Current medications</div>
-    <table class="t" style="font-size:11px;"><thead><tr><th>Medication name</th><th>Dose</th><th>Frequency</th><th>Prescribing doctor</th><th>Pharmacy</th><th>Refill date</th><th>Notes / side effects</th></tr></thead><tbody>
-    <tr><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr>
-    <tr><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr>
-    <tr><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr>
-    <tr><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr>
-    <tr><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr>
-    <tr><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr>
-    <tr><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr>
-    <tr><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr>
-    </tbody></table>
-    <div class="sh">Discontinued medications</div>
-    <table class="t"><thead><tr><th>Medication name</th><th>Dose</th><th>Date stopped</th><th>Reason discontinued</th></tr></thead><tbody>
-    <tr><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr><tr><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr><tr><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr>
-    </tbody></table>
-    <div class="sh">OTC supplements &amp; vitamins</div>
-    <table class="t"><thead><tr><th>Supplement</th><th>Dose</th><th>Frequency</th><th>Brand / notes</th></tr></thead><tbody>
-    <tr><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr><tr><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr><tr><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr>
-    </tbody></table>
-    <div class="df"><div class="ft">Parent name: ___________________ &nbsp; Last updated: ___________<div class="cr">© ReadyFileStudio · For personal use only · Redistribution, resale, or public sharing is prohibited · readyfilestudio-toolkit1.vercel.app</div></div><div class="ft">Page 1 of 1</div></div>
-  </div>
-
-  <div id="doc3" class="doc">
-    <div class="doc-header"><div class="doc-title">Doctor &amp; specialist contact directory</div><div class="doc-brand">Aging Parent Admin Toolkit</div></div>
-    <div class="sh">Primary care physician</div>
-    <div class="fg">
-      <div class="f"><div class="fl">Physician name</div><div class="fv" contenteditable="true" spellcheck="false"></div></div>
-      <div class="f"><div class="fl">Practice / clinic</div><div class="fv" contenteditable="true" spellcheck="false"></div></div>
-      <div class="f"><div class="fl">Phone</div><div class="fv" contenteditable="true" spellcheck="false"></div></div>
-      <div class="f"><div class="fl">Fax</div><div class="fv" contenteditable="true" spellcheck="false"></div></div>
-      <div class="f"><div class="fl">Address</div><div class="fv" contenteditable="true" spellcheck="false"></div></div>
-      <div class="f"><div class="fl">Patient portal URL</div><div class="fv" contenteditable="true" spellcheck="false"></div></div>
-      <div class="f"><div class="fl">Insurance accepted</div><div class="fv" contenteditable="true" spellcheck="false"></div></div>
-      <div class="f"><div class="fl">Portal login username</div><div class="fv" contenteditable="true" spellcheck="false"></div></div>
-    </div>
-    <div class="sh">Specialists</div>
-    <table class="t" style="font-size:11px;"><thead><tr><th>Specialty</th><th>Doctor name</th><th>Clinic</th><th>Phone</th><th>Patient portal</th><th>Last visit</th></tr></thead><tbody>
-    <tr><td contenteditable="true" spellcheck="false">Cardiologist</td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr>
-    <tr><td contenteditable="true" spellcheck="false">Neurologist</td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr>
-    <tr><td contenteditable="true" spellcheck="false">Orthopedist</td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr>
-    <tr><td contenteditable="true" spellcheck="false">Ophthalmologist</td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr>
-    <tr><td contenteditable="true" spellcheck="false">Urologist</td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr>
-    <tr><td contenteditable="true" spellcheck="false">Dermatologist</td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr>
-    <tr><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr>
-    <tr><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr>
-    </tbody></table>
-    <div class="sh">Pharmacy &amp; other providers</div>
-    <div class="fg">
-      <div class="f"><div class="fl">Pharmacy name</div><div class="fv" contenteditable="true" spellcheck="false"></div></div>
-      <div class="f"><div class="fl">Pharmacy phone</div><div class="fv" contenteditable="true" spellcheck="false"></div></div>
-      <div class="f"><div class="fl">Home health aide / agency</div><div class="fv" contenteditable="true" spellcheck="false"></div></div>
-      <div class="f"><div class="fl">Home health phone</div><div class="fv" contenteditable="true" spellcheck="false"></div></div>
-      <div class="f"><div class="fl">Dentist</div><div class="fv" contenteditable="true" spellcheck="false"></div></div>
-      <div class="f"><div class="fl">Dentist phone</div><div class="fv" contenteditable="true" spellcheck="false"></div></div>
-    </div>
-    <div class="df"><div class="ft">Last updated: ___________<div class="cr">© ReadyFileStudio · For personal use only · Redistribution, resale, or public sharing is prohibited · readyfilestudio-toolkit1.vercel.app</div></div><div class="ft">Page 1 of 1</div></div>
-  </div>
-
-  <div id="doc4" class="doc">
-    <div class="doc-header"><div class="doc-title">Legal &amp; financial documents checklist</div><div class="doc-brand">Aging Parent Admin Toolkit</div></div>
-    <div class="nb"><i class="ti ti-lock" aria-hidden="true" style="margin-right:6px;"></i>For each item: check whether it exists, note where the original is stored, and who has a copy.</div>
-    <div class="sh">Legal documents</div>
-    <div class="ci"><input type="checkbox" class="cb"><div class="ct">Last will and testament<div class="cs">Location: <input type="text" class="cs-input" style="width:203px"> &nbsp; Attorney: <input type="text" class="cs-input" style="width:175px"> &nbsp; Date signed: <input type="text" class="cs-input" style="width:80px"></div></div></div>
-    <div class="ci"><input type="checkbox" class="cb"><div class="ct">Durable power of attorney (financial)<div class="cs">Agent name: <input type="text" class="cs-input" style="width:189px"> &nbsp; Location: <input type="text" class="cs-input" style="width:175px"> &nbsp; Date signed: <input type="text" class="cs-input" style="width:80px"></div></div></div>
-    <div class="ci"><input type="checkbox" class="cb"><div class="ct">Healthcare power of attorney / proxy<div class="cs">Agent name: <input type="text" class="cs-input" style="width:189px"> &nbsp; Location: <input type="text" class="cs-input" style="width:175px"> &nbsp; Date signed: <input type="text" class="cs-input" style="width:80px"></div></div></div>
-    <div class="ci"><input type="checkbox" class="cb"><div class="ct">Living will / advance directive<div class="cs">Location: <input type="text" class="cs-input" style="width:203px"> &nbsp; Copy with PCP: <select class="cs-input" style="width:70px"><option value="">—</option><option>Yes</option><option>No</option></select> &nbsp; Copy with hospital: <select class="cs-input" style="width:70px"><option value="">—</option><option>Yes</option><option>No</option></select></div></div></div>
-    <div class="ci"><input type="checkbox" class="cb"><div class="ct">Do Not Resuscitate (DNR) order<div class="cs">Location: <input type="text" class="cs-input" style="width:203px"> &nbsp; Medical team notified: <select class="cs-input" style="width:70px"><option value="">—</option><option>Yes</option><option>No</option></select></div></div></div>
-    <div class="ci"><input type="checkbox" class="cb"><div class="ct">Trust documents (if applicable)<div class="cs">Trust name: <input type="text" class="cs-input" style="width:189px"> &nbsp; Trustee: <input type="text" class="cs-input" style="width:119px"> &nbsp; Attorney: <input type="text" class="cs-input" style="width:126px"></div></div></div>
-    <div class="sh">Financial accounts</div>
-    <div class="ci"><input type="checkbox" class="cb"><div class="ct">Checking &amp; savings accounts<div class="cs">Bank(s): <input type="text" class="cs-input" style="width:210px"> &nbsp; Joint account holder(s): <input type="text" class="cs-input" style="width:203px"></div></div></div>
-    <div class="ci"><input type="checkbox" class="cb"><div class="ct">Investment &amp; brokerage accounts<div class="cs">Institution: <input type="text" class="cs-input" style="width:189px"> &nbsp; Advisor name &amp; phone: <input type="text" class="cs-input" style="width:210px"></div></div></div>
-    <div class="ci"><input type="checkbox" class="cb"><div class="ct">Pension / retirement accounts (401k, IRA)<div class="cs">Provider: <input type="text" class="cs-input" style="width:203px"> &nbsp; Beneficiary on file: <input type="text" class="cs-input" style="width:220px"></div></div></div>
-    <div class="ci"><input type="checkbox" class="cb"><div class="ct">Social Security income<div class="cs">Monthly amount: $<input type="text" class="cs-input" style="width:84px"> &nbsp; Direct deposit to: <input type="text" class="cs-input" style="width:220px"></div></div></div>
-    <div class="sh">Insurance policies</div>
-    <div class="ci"><input type="checkbox" class="cb"><div class="ct">Life insurance<div class="cs">Carrier: <input type="text" class="cs-input" style="width:119px"> &nbsp; Policy #: <input type="text" class="cs-input" style="width:91px"> &nbsp; Beneficiary: <input type="text" class="cs-input" style="width:91px"> &nbsp; Death benefit: $<input type="text" class="cs-input" style="width:80px"></div></div></div>
-    <div class="ci"><input type="checkbox" class="cb"><div class="ct">Long-term care insurance<div class="cs">Carrier: <input type="text" class="cs-input" style="width:119px"> &nbsp; Policy #: <input type="text" class="cs-input" style="width:91px"> &nbsp; Monthly benefit: $<input type="text" class="cs-input" style="width:80px"> &nbsp; Elimination period: <input type="text" class="cs-input" style="width:80px"></div></div></div>
-    <div class="ci"><input type="checkbox" class="cb"><div class="ct">Medicare / Medicaid<div class="cs">Medicare ID: <input type="text" class="cs-input" style="width:119px"> &nbsp; Part D plan: <input type="text" class="cs-input" style="width:112px"> &nbsp; Supplement plan: <input type="text" class="cs-input" style="width:80px"></div></div></div>
-    <div class="sh">Property &amp; digital assets</div>
-    <div class="ci"><input type="checkbox" class="cb"><div class="ct">Property deed(s)<div class="cs">Address: <input type="text" class="cs-input" style="width:203px"> &nbsp; Location of deed: <input type="text" class="cs-input" style="width:161px"></div></div></div>
-    <div class="ci"><input type="checkbox" class="cb"><div class="ct">Vehicle titles<div class="cs">Vehicle(s): <input type="text" class="cs-input" style="width:189px"> &nbsp; Location of title(s): <input type="text" class="cs-input" style="width:140px"></div></div></div>
-    <div class="ci"><input type="checkbox" class="cb"><div class="ct">Password manager / digital accounts list<div class="cs">Location: <input type="text" class="cs-input" style="width:203px"> &nbsp; Who has access: <input type="text" class="cs-input" style="width:175px"></div></div></div>
-    <div class="df"><div class="ft">Completed by: ___________________ &nbsp; Date: ___________<div class="cr">© ReadyFileStudio · For personal use only · Redistribution, resale, or public sharing is prohibited · readyfilestudio-toolkit1.vercel.app</div></div><div class="ft">Page 1 of 1</div></div>
-  </div>
-
-  <div id="doc5" class="doc">
-    <div class="doc-header"><div class="doc-title">Doctor appointment prep &amp; notes</div><div class="doc-brand">Aging Parent Admin Toolkit</div></div>
-    <div class="sh">Appointment details</div>
-    <div class="fg">
-      <div class="f"><div class="fl">Doctor / specialist seen</div><div class="fv" contenteditable="true" spellcheck="false"></div></div>
-      <div class="f"><div class="fl">Date &amp; time</div><div class="fv" contenteditable="true" spellcheck="false"></div></div>
-      <div class="f"><div class="fl">Reason for visit</div><div class="fv" contenteditable="true" spellcheck="false"></div></div>
-      <div class="f"><div class="fl">Caregiver present</div><div class="fv" contenteditable="true" spellcheck="false"></div></div>
-    </div>
-    <div class="sh">Questions to ask</div>
-    <table class="t"><thead><tr><th style="width:55%">Question</th><th>Doctor's response</th></tr></thead><tbody>
-    <tr><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr><tr><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr><tr><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr><tr><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr><tr><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr>
-    </tbody></table>
-    <div class="sh">Symptoms &amp; concerns to report</div>
-    <div class="f"><div class="fl">New or worsening symptoms since last visit</div><div class="fa" contenteditable="true" spellcheck="false"></div></div>
-    <div style="height:8px;"></div>
-    <div class="sh">After the appointment</div>
-    <div class="f"><div class="fl">Diagnosis / findings</div><div class="fa" contenteditable="true" spellcheck="false"></div></div>
-    <div style="height:8px;"></div>
-    <div class="f"><div class="fl">Medications changed (added / removed / adjusted)</div><div class="fa" contenteditable="true" spellcheck="false"></div></div>
-    <div style="height:8px;"></div>
-    <div class="sh">Follow-up actions</div>
-    <table class="t"><thead><tr><th style="width:55%">Action item</th><th style="width:25%">Who is responsible</th><th>By when</th></tr></thead><tbody>
-    <tr><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr><tr><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr><tr><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr><tr><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr>
-    </tbody></table>
-    <div class="fg">
-      <div class="f"><div class="fl">Next appointment date</div><div class="fv" contenteditable="true" spellcheck="false"></div></div>
-      <div class="f"><div class="fl">Referrals given</div><div class="fv" contenteditable="true" spellcheck="false"></div></div>
-    </div>
-    <div class="df"><div class="ft">Parent name: ___________________<div class="cr">© ReadyFileStudio · For personal use only · Redistribution, resale, or public sharing is prohibited · readyfilestudio-toolkit1.vercel.app</div></div><div class="ft">Page 1 of 1</div></div>
-  </div>
-
-  <div id="doc6" class="doc">
-    <div class="doc-header"><div class="doc-title">Caregiver sibling coordination log</div><div class="doc-brand">Aging Parent Admin Toolkit</div></div>
-    <div class="nb"><i class="ti ti-users" aria-hidden="true" style="margin-right:6px;"></i>Share with all siblings involved in care. Update after every task so no one feels the burden is unequal.</div>
-    <div class="sh">Caregiver roster</div>
-    <table class="t"><thead><tr><th>Name</th><th>Relationship</th><th>Phone</th><th>Primary responsibilities</th><th>Lives nearby?</th></tr></thead><tbody>
-    <tr><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr>
-    <tr><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr>
-    <tr><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr>
-    <tr><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr>
-    </tbody></table>
-    <div class="sh">Care task log</div>
-    <table class="t" style="font-size:11px;"><thead><tr><th>Date</th><th>Task completed</th><th>Done by</th><th>Time spent</th><th>Notes / follow-up needed</th></tr></thead><tbody>
-    <tr><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr>
-    <tr><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr>
-    <tr><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr>
-    <tr><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr>
-    <tr><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr>
-    <tr><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr>
-    <tr><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr>
-    <tr><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr>
-    <tr><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr>
-    <tr><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr>
-    </tbody></table>
-    <div class="sh">Upcoming tasks — who's handling what</div>
-    <table class="t"><thead><tr><th>Task</th><th>Assigned to</th><th>Date needed</th><th>Status</th></tr></thead><tbody>
-    <tr><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr>
-    <tr><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr>
-    <tr><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr>
-    <tr><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td><td contenteditable="true" spellcheck="false"></td></tr>
-    </tbody></table>
-    <div class="df"><div class="ft">Parent name: ___________________ &nbsp; Month / period: ___________<div class="cr">© ReadyFileStudio · For personal use only · Redistribution, resale, or public sharing is prohibited · readyfilestudio-toolkit1.vercel.app</div></div><div class="ft">Page 1 of 1</div></div>
-  </div>
-
-  <div id="doc7" class="doc">
-    <div class="doc-header"><div class="doc-title">Quick-start guide</div><div class="doc-brand">Aging Parent Admin Toolkit</div></div>
-    <div class="nb nb-g">Welcome to the Aging Parent Admin Toolkit. This guide walks you through how to set it up in about 2 hours.</div>
-    <div class="sh">Step 1 — Start with the emergency sheet (doc 1)</div>
-    <div class="ci"><input type="checkbox" class="cb"><div class="ct">Fill in personal details and emergency contacts first. This is the most urgent document — needed in a crisis and takes 10 minutes to complete.</div></div>
-    <div class="ci"><input type="checkbox" class="cb"><div class="ct">Print one copy and keep it visible at your parent's home (e.g., on the fridge). Share the digital version with all siblings.</div></div>
-    <div class="sh">Step 2 — Fill in the medical documents (docs 2–4)</div>
-    <div class="ci"><input type="checkbox" class="cb"><div class="ct">Gather medication bottles and insurance cards. Fill in the medication log (doc 3) and provider directory (doc 4) from these sources.</div></div>
-    <div class="ci"><input type="checkbox" class="cb"><div class="ct">Complete the medical history tracker (doc 2) with your parent's input — they'll know past diagnoses and surgeries best.</div></div>
-    <div class="ci"><input type="checkbox" class="cb"><div class="ct">Bring the medication log to the next pharmacy visit to verify everything is current.</div></div>
-    <div class="sh">Step 3 — Tackle the legal &amp; financial checklist (doc 5)</div>
-    <div class="ci"><input type="checkbox" class="cb"><div class="ct">Work through this with your parent present. Focus first on whether a will and power of attorney exist.</div></div>
-    <div class="ci"><input type="checkbox" class="cb"><div class="ct">If key documents are missing, prioritize contacting an elder law attorney. Many offer free 30-minute consultations.</div></div>
-    <div class="sh">Step 4 — Set up the coordination log (doc 7)</div>
-    <div class="ci"><input type="checkbox" class="cb"><div class="ct">Share the sibling coordination log with everyone involved in care. Agree on a shared folder (Google Drive works well).</div></div>
-    <div class="ci"><input type="checkbox" class="cb"><div class="ct">Use the appointment notes template (doc 6) before every doctor visit. Take it with you and write notes during the appointment.</div></div>
-    <div class="sh">How to store &amp; share securely</div>
-    <div class="ci"><input type="checkbox" class="cb"><div class="ct">Digital: Save to a shared Google Drive or Dropbox folder accessible to all family caregivers. Name the folder "Mom / Dad Care Documents."</div></div>
-    <div class="ci"><input type="checkbox" class="cb"><div class="ct">Physical: Keep a printed binder at your parent's home with divider tabs for each section.</div></div>
-    <div class="ci"><input type="checkbox" class="cb"><div class="ct">Security: Do not email documents containing SSNs or financial account numbers. Use password-protected Drive/Dropbox sharing instead.</div></div>
-    <div class="sh">Keeping it updated</div>
-    <div class="ci"><input type="checkbox" class="cb"><div class="ct">Set a reminder every 3 months to review the medication log, provider directory, and emergency sheet. A 15-minute quarterly review keeps the toolkit accurate when it matters most.</div></div>
-    <div class="df"><div class="ft">The Aging Parent Admin Toolkit<div class="cr">© ReadyFileStudio · For personal use only · Redistribution, resale, or public sharing is prohibited · readyfilestudio-toolkit1.vercel.app</div></div><div class="ft">Page 1 of 1</div></div>
+  <div class="header-actions">
+    <button class="btn btn-outline" onclick="printCurrent()">Print This Sheet</button>
+    <button class="btn btn-solid" onclick="saveAll()">Save All (PDF)</button>
   </div>
 </div>
 
+<!-- NAV TABS -->
+<div class="nav">
+  <button class="nav-tab active" onclick="switchTab(0)">Quick Start</button>
+  <button class="nav-tab" onclick="switchTab(1)">Emergency Info</button>
+  <button class="nav-tab" onclick="switchTab(2)">Medical Records</button>
+  <button class="nav-tab" onclick="switchTab(3)">Medications</button>
+  <button class="nav-tab" onclick="switchTab(4)">Providers</button>
+  <button class="nav-tab" onclick="switchTab(5)">Legal & Finance</button>
+  <button class="nav-tab" onclick="switchTab(6)">Appointments</button>
+  <button class="nav-tab" onclick="switchTab(7)">Family Notes</button>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main">
+
+  <!-- SECTION 0: QUICK START -->
+  <div id="sec0" class="section visible">
+    <div class="welcome-banner">
+      <h1>Welcome to Your Aging Parent Admin Toolkit</h1>
+      <p>Everything you need to manage your loved one's care — organized, accessible, and always ready.</p>
+      <div class="tagline">ReadyFileStudio · Digital Download</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">How to Use This Toolkit</div>
+      <ul class="checklist">
+        <li><input type="checkbox"> Fill in the Emergency Info sheet first — it's the most important</li>
+        <li><input type="checkbox"> Complete Medical Records with current diagnoses and history</li>
+        <li><input type="checkbox"> Add all medications to the Medications sheet</li>
+        <li><input type="checkbox"> List all doctors and specialists in Providers</li>
+        <li><input type="checkbox"> Record key legal documents in Legal & Finance</li>
+        <li><input type="checkbox"> Use Appointments to track upcoming visits</li>
+        <li><input type="checkbox"> Use Family Notes for coordination between caregivers</li>
+        <li><input type="checkbox"> Print any sheet using the Print button above</li>
+        <li><input type="checkbox"> Save all sheets as PDF using Save All button</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Parent Overview</div>
+      <div class="field-row">
+        <div class="field"><label>Full Name</label><input type="text" placeholder="Parent's full legal name"></div>
+        <div class="field"><label>Date of Birth</label><input type="text" placeholder="MM/DD/YYYY"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Address</label><input type="text" placeholder="Current home address"></div>
+        <div class="field"><label>Phone Number</label><input type="text" placeholder="Primary phone"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Medicare / Medicaid #</label><input type="text" placeholder="Insurance ID number"></div>
+        <div class="field"><label>Primary Insurance</label><input type="text" placeholder="Insurance provider name"></div>
+      </div>
+      <div class="field-row single">
+        <div class="field"><label>Additional Notes</label><textarea placeholder="Any important information to keep at the top level..."></textarea></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 1: EMERGENCY INFO -->
+  <div id="sec1" class="section">
+    <div class="card">
+      <div class="card-title">Emergency Contacts</div>
+      <p class="section-intro">List the people to contact immediately in an emergency. Keep this sheet printed and on the fridge.</p>
+      <table class="tbl">
+        <thead>
+          <tr><th>Name</th><th>Relationship</th><th>Phone</th><th>Alt. Phone</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><input type="text" placeholder="Contact name"></td><td><input type="text" placeholder="e.g. Son"></td><td><input type="text" placeholder="Mobile"></td><td><input type="text" placeholder="Home/Work"></td></tr>
+          <tr><td><input type="text" placeholder="Contact name"></td><td><input type="text" placeholder="e.g. Daughter"></td><td><input type="text" placeholder="Mobile"></td><td><input type="text" placeholder="Home/Work"></td></tr>
+          <tr><td><input type="text" placeholder="Contact name"></td><td><input type="text" placeholder="e.g. Neighbor"></td><td><input type="text" placeholder="Mobile"></td><td><input type="text" placeholder="Home/Work"></td></tr>
+          <tr><td><input type="text" placeholder="Contact name"></td><td><input type="text" placeholder="e.g. Close friend"></td><td><input type="text" placeholder="Mobile"></td><td><input type="text" placeholder="Home/Work"></td></tr>
+          <tr><td><input type="text" placeholder="Contact name"></td><td><input type="text" placeholder="Relationship"></td><td><input type="text" placeholder="Mobile"></td><td><input type="text" placeholder="Home/Work"></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Critical Medical Information</div>
+      <div class="field-row">
+        <div class="field"><label>Blood Type</label><input type="text" placeholder="e.g. O+"></div>
+        <div class="field"><label>Primary Hospital</label><input type="text" placeholder="Preferred hospital name"></div>
+      </div>
+      <div class="field-row single">
+        <div class="field"><label>Known Allergies (medications, foods, other)</label><textarea placeholder="List all known allergies and reactions..."></textarea></div>
+      </div>
+      <div class="field-row single">
+        <div class="field"><label>Do Not Resuscitate (DNR) / Advance Directive</label><input type="text" placeholder="Yes / No — Location of document"></div>
+      </div>
+      <div class="field-row single">
+        <div class="field"><label>Critical Conditions First Responders Must Know</label><textarea placeholder="e.g. pacemaker, insulin dependent, severe penicillin allergy..."></textarea></div>
+      </div>
+    </div>
+
+    <div class="note-box">
+      💡 Tip: Print this page and keep one copy on the fridge, one in your parent's wallet, and one with each primary caregiver.
+    </div>
+  </div>
+
+  <!-- SECTION 2: MEDICAL RECORDS -->
+  <div id="sec2" class="section">
+    <div class="card">
+      <div class="card-title">Diagnoses & Medical History</div>
+      <table class="tbl">
+        <thead>
+          <tr><th>Condition / Diagnosis</th><th>Date Diagnosed</th><th>Status</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><input type="text" placeholder="Condition name"></td><td><input type="text" placeholder="Year"></td><td><input type="text" placeholder="Active / Managed"></td><td><input type="text" placeholder="Notes"></td></tr>
+          <tr><td><input type="text" placeholder="Condition name"></td><td><input type="text" placeholder="Year"></td><td><input type="text" placeholder="Active / Managed"></td><td><input type="text" placeholder="Notes"></td></tr>
+          <tr><td><input type="text" placeholder="Condition name"></td><td><input type="text" placeholder="Year"></td><td><input type="text" placeholder="Active / Managed"></td><td><input type="text" placeholder="Notes"></td></tr>
+          <tr><td><input type="text" placeholder="Condition name"></td><td><input type="text" placeholder="Year"></td><td><input type="text" placeholder="Active / Managed"></td><td><input type="text" placeholder="Notes"></td></tr>
+          <tr><td><input type="text" placeholder="Condition name"></td><td><input type="text" placeholder="Year"></td><td><input type="text" placeholder="Active / Managed"></td><td><input type="text" placeholder="Notes"></td></tr>
+          <tr><td><input type="text" placeholder="Condition name"></td><td><input type="text" placeholder="Year"></td><td><input type="text" placeholder="Active / Managed"></td><td><input type="text" placeholder="Notes"></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Surgeries & Hospitalizations</div>
+      <table class="tbl">
+        <thead>
+          <tr><th>Procedure / Event</th><th>Date</th><th>Hospital / Facility</th><th>Outcome / Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><input type="text" placeholder="Procedure name"></td><td><input type="text" placeholder="MM/YYYY"></td><td><input type="text" placeholder="Facility name"></td><td><input type="text" placeholder="Notes"></td></tr>
+          <tr><td><input type="text" placeholder="Procedure name"></td><td><input type="text" placeholder="MM/YYYY"></td><td><input type="text" placeholder="Facility name"></td><td><input type="text" placeholder="Notes"></td></tr>
+          <tr><td><input type="text" placeholder="Procedure name"></td><td><input type="text" placeholder="MM/YYYY"></td><td><input type="text" placeholder="Facility name"></td><td><input type="text" placeholder="Notes"></td></tr>
+          <tr><td><input type="text" placeholder="Procedure name"></td><td><input type="text" placeholder="MM/YYYY"></td><td><input type="text" placeholder="Facility name"></td><td><input type="text" placeholder="Notes"></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Vaccinations & Screenings</div>
+      <table class="tbl">
+        <thead>
+          <tr><th>Vaccine / Screening</th><th>Last Date</th><th>Next Due</th><th>Location</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><input type="text" placeholder="e.g. Flu shot"></td><td><input type="text" placeholder="MM/YYYY"></td><td><input type="text" placeholder="MM/YYYY"></td><td><input type="text" placeholder="Doctor / Pharmacy"></td></tr>
+          <tr><td><input type="text" placeholder="e.g. COVID booster"></td><td><input type="text" placeholder="MM/YYYY"></td><td><input type="text" placeholder="MM/YYYY"></td><td><input type="text" placeholder="Doctor / Pharmacy"></td></tr>
+          <tr><td><input type="text" placeholder="e.g. Colonoscopy"></td><td><input type="text" placeholder="MM/YYYY"></td><td><input type="text" placeholder="MM/YYYY"></td><td><input type="text" placeholder="Doctor / Pharmacy"></td></tr>
+          <tr><td><input type="text" placeholder="e.g. Mammogram"></td><td><input type="text" placeholder="MM/YYYY"></td><td><input type="text" placeholder="MM/YYYY"></td><td><input type="text" placeholder="Doctor / Pharmacy"></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- SECTION 3: MEDICATIONS -->
+  <div id="sec3" class="section">
+    <div class="card">
+      <div class="card-title">Current Medications</div>
+      <p class="section-intro">Keep this list updated after every doctor visit. Bring a printed copy to every appointment.</p>
+      <table class="tbl">
+        <thead>
+          <tr><th>Medication Name</th><th>Dosage</th><th>Frequency</th><th>Prescribing Doctor</th><th>Purpose</th><th>Refill Date</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><input type="text" placeholder="Drug name"></td><td><input type="text" placeholder="e.g. 10mg"></td><td><input type="text" placeholder="e.g. Once daily"></td><td><input type="text" placeholder="Dr. name"></td><td><input type="text" placeholder="Reason"></td><td><input type="text" placeholder="MM/DD"></td></tr>
+          <tr><td><input type="text" placeholder="Drug name"></td><td><input type="text" placeholder="e.g. 10mg"></td><td><input type="text" placeholder="e.g. Twice daily"></td><td><input type="text" placeholder="Dr. name"></td><td><input type="text" placeholder="Reason"></td><td><input type="text" placeholder="MM/DD"></td></tr>
+          <tr><td><input type="text" placeholder="Drug name"></td><td><input type="text" placeholder="e.g. 10mg"></td><td><input type="text" placeholder="e.g. As needed"></td><td><input type="text" placeholder="Dr. name"></td><td><input type="text" placeholder="Reason"></td><td><input type="text" placeholder="MM/DD"></td></tr>
+          <tr><td><input type="text" placeholder="Drug name"></td><td><input type="text" placeholder="e.g. 10mg"></td><td><input type="text" placeholder="e.g. With meals"></td><td><input type="text" placeholder="Dr. name"></td><td><input type="text" placeholder="Reason"></td><td><input type="text" placeholder="MM/DD"></td></tr>
+          <tr><td><input type="text" placeholder="Drug name"></td><td><input type="text" placeholder="e.g. 10mg"></td><td><input type="text" placeholder="e.g. Once weekly"></td><td><input type="text" placeholder="Dr. name"></td><td><input type="text" placeholder="Reason"></td><td><input type="text" placeholder="MM/DD"></td></tr>
+          <tr><td><input type="text" placeholder="Drug name"></td><td><input type="text" placeholder="e.g. 10mg"></td><td><input type="text" placeholder="Frequency"></td><td><input type="text" placeholder="Dr. name"></td><td><input type="text" placeholder="Reason"></td><td><input type="text" placeholder="MM/DD"></td></tr>
+          <tr><td><input type="text" placeholder="Drug name"></td><td><input type="text" placeholder="e.g. 10mg"></td><td><input type="text" placeholder="Frequency"></td><td><input type="text" placeholder="Dr. name"></td><td><input type="text" placeholder="Reason"></td><td><input type="text" placeholder="MM/DD"></td></tr>
+          <tr><td><input type="text" placeholder="Drug name"></td><td><input type="text" placeholder="e.g. 10mg"></td><td><input type="text" placeholder="Frequency"></td><td><input type="text" placeholder="Dr. name"></td><td><input type="text" placeholder="Reason"></td><td><input type="text" placeholder="MM/DD"></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Pharmacy Information</div>
+      <div class="field-row">
+        <div class="field"><label>Pharmacy Name</label><input type="text" placeholder="e.g. CVS, Walgreens"></div>
+        <div class="field"><label>Phone Number</label><input type="text" placeholder="Pharmacy phone"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Address</label><input type="text" placeholder="Pharmacy address"></div>
+        <div class="field"><label>Pharmacist Name</label><input type="text" placeholder="Primary pharmacist (optional)"></div>
+      </div>
+      <div class="field-row single">
+        <div class="field"><label>Notes (auto-refill status, delivery, etc.)</label><textarea placeholder="Any notes about pharmacy preferences or arrangements..."></textarea></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Discontinued Medications</div>
+      <table class="tbl">
+        <thead>
+          <tr><th>Medication</th><th>Stopped Date</th><th>Reason Discontinued</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><input type="text" placeholder="Medication name"></td><td><input type="text" placeholder="MM/YYYY"></td><td><input type="text" placeholder="Reason"></td></tr>
+          <tr><td><input type="text" placeholder="Medication name"></td><td><input type="text" placeholder="MM/YYYY"></td><td><input type="text" placeholder="Reason"></td></tr>
+          <tr><td><input type="text" placeholder="Medication name"></td><td><input type="text" placeholder="MM/YYYY"></td><td><input type="text" placeholder="Reason"></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- SECTION 4: PROVIDERS -->
+  <div id="sec4" class="section">
+    <div class="card">
+      <div class="card-title">Healthcare Providers Directory</div>
+      <p class="section-intro">Keep all doctors, specialists, and care providers in one place. Update after any provider change.</p>
+      <table class="tbl">
+        <thead>
+          <tr><th>Provider / Specialty</th><th>Name</th><th>Phone</th><th>Address</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><input type="text" placeholder="Primary Care"></td><td><input type="text" placeholder="Dr. name"></td><td><input type="text" placeholder="Office phone"></td><td><input type="text" placeholder="Address"></td><td><input type="text" placeholder="Notes"></td></tr>
+          <tr><td><input type="text" placeholder="Cardiologist"></td><td><input type="text" placeholder="Dr. name"></td><td><input type="text" placeholder="Office phone"></td><td><input type="text" placeholder="Address"></td><td><input type="text" placeholder="Notes"></td></tr>
+          <tr><td><input type="text" placeholder="Neurologist"></td><td><input type="text" placeholder="Dr. name"></td><td><input type="text" placeholder="Office phone"></td><td><input type="text" placeholder="Address"></td><td><input type="text" placeholder="Notes"></td></tr>
+          <tr><td><input type="text" placeholder="Specialist"></td><td><input type="text" placeholder="Dr. name"></td><td><input type="text" placeholder="Office phone"></td><td><input type="text" placeholder="Address"></td><td><input type="text" placeholder="Notes"></td></tr>
+          <tr><td><input type="text" placeholder="Specialist"></td><td><input type="text" placeholder="Dr. name"></td><td><input type="text" placeholder="Office phone"></td><td><input type="text" placeholder="Address"></td><td><input type="text" placeholder="Notes"></td></tr>
+          <tr><td><input type="text" placeholder="Dentist"></td><td><input type="text" placeholder="Dr. name"></td><td><input type="text" placeholder="Office phone"></td><td><input type="text" placeholder="Address"></td><td><input type="text" placeholder="Notes"></td></tr>
+          <tr><td><input type="text" placeholder="Eye Doctor"></td><td><input type="text" placeholder="Dr. name"></td><td><input type="text" placeholder="Office phone"></td><td><input type="text" placeholder="Address"></td><td><input type="text" placeholder="Notes"></td></tr>
+          <tr><td><input type="text" placeholder="Home Health Aide"></td><td><input type="text" placeholder="Name"></td><td><input type="text" placeholder="Phone"></td><td><input type="text" placeholder="Agency"></td><td><input type="text" placeholder="Schedule"></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Insurance & Coverage</div>
+      <div class="field-row">
+        <div class="field"><label>Medicare Number</label><input type="text" placeholder="Medicare ID"></div>
+        <div class="field"><label>Medicare Part</label><input type="text" placeholder="A, B, C (Advantage), D"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Supplemental Insurance</label><input type="text" placeholder="Provider name"></div>
+        <div class="field"><label>Policy Number</label><input type="text" placeholder="Policy ID"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Insurance Phone</label><input type="text" placeholder="Member services number"></div>
+        <div class="field"><label>Long-Term Care Insurance</label><input type="text" placeholder="Provider / Policy #"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 5: LEGAL & FINANCE -->
+  <div id="sec5" class="section">
+    <div class="card">
+      <div class="card-title">Legal Documents</div>
+      <p class="section-intro">Record the location of all key legal documents. Do not store sensitive numbers digitally — use this as a location reference only.</p>
+      <table class="tbl">
+        <thead>
+          <tr><th>Document</th><th>Exists?</th><th>Date Signed</th><th>Location / Where to Find</th><th>Attorney / Contact</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><input type="text" value="Will / Testament" readonly style="color:#888; font-style:italic;"></td><td><input type="text" placeholder="Yes / No"></td><td><input type="text" placeholder="MM/YYYY"></td><td><input type="text" placeholder="Safe, attorney office..."></td><td><input type="text" placeholder="Attorney name & phone"></td></tr>
+          <tr><td><input type="text" value="Durable Power of Attorney" readonly style="color:#888; font-style:italic;"></td><td><input type="text" placeholder="Yes / No"></td><td><input type="text" placeholder="MM/YYYY"></td><td><input type="text" placeholder="Location"></td><td><input type="text" placeholder="Attorney name & phone"></td></tr>
+          <tr><td><input type="text" value="Healthcare Proxy / POA" readonly style="color:#888; font-style:italic;"></td><td><input type="text" placeholder="Yes / No"></td><td><input type="text" placeholder="MM/YYYY"></td><td><input type="text" placeholder="Location"></td><td><input type="text" placeholder="Attorney name & phone"></td></tr>
+          <tr><td><input type="text" value="Living Will / Advance Directive" readonly style="color:#888; font-style:italic;"></td><td><input type="text" placeholder="Yes / No"></td><td><input type="text" placeholder="MM/YYYY"></td><td><input type="text" placeholder="Location"></td><td><input type="text" placeholder="Attorney name & phone"></td></tr>
+          <tr><td><input type="text" value="Trust Documents" readonly style="color:#888; font-style:italic;"></td><td><input type="text" placeholder="Yes / No"></td><td><input type="text" placeholder="MM/YYYY"></td><td><input type="text" placeholder="Location"></td><td><input type="text" placeholder="Attorney name & phone"></td></tr>
+          <tr><td><input type="text" placeholder="Other document"></td><td><input type="text" placeholder="Yes / No"></td><td><input type="text" placeholder="MM/YYYY"></td><td><input type="text" placeholder="Location"></td><td><input type="text" placeholder="Contact"></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Financial Accounts Overview</div>
+      <table class="tbl">
+        <thead>
+          <tr><th>Account Type</th><th>Institution</th><th>Account Last 4</th><th>Authorized Person</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><input type="text" placeholder="e.g. Checking"></td><td><input type="text" placeholder="Bank name"></td><td><input type="text" placeholder="Last 4 digits"></td><td><input type="text" placeholder="Who has access"></td><td><input type="text" placeholder="Notes"></td></tr>
+          <tr><td><input type="text" placeholder="e.g. Savings"></td><td><input type="text" placeholder="Bank name"></td><td><input type="text" placeholder="Last 4 digits"></td><td><input type="text" placeholder="Who has access"></td><td><input type="text" placeholder="Notes"></td></tr>
+          <tr><td><input type="text" placeholder="e.g. Social Security"></td><td><input type="text" placeholder="SSA"></td><td><input type="text" placeholder="N/A"></td><td><input type="text" placeholder="Who manages"></td><td><input type="text" placeholder="Monthly amount"></td></tr>
+          <tr><td><input type="text" placeholder="e.g. Pension"></td><td><input type="text" placeholder="Institution"></td><td><input type="text" placeholder="Last 4 digits"></td><td><input type="text" placeholder="Who has access"></td><td><input type="text" placeholder="Notes"></td></tr>
+          <tr><td><input type="text" placeholder="Investment / IRA"></td><td><input type="text" placeholder="Institution"></td><td><input type="text" placeholder="Last 4 digits"></td><td><input type="text" placeholder="Who has access"></td><td><input type="text" placeholder="Notes"></td></tr>
+        </tbody>
+      </table>
+      <div class="note-box">
+        ⚠️ Security Note: Do not store full account numbers, passwords, or Social Security numbers in this document. Keep sensitive data in a locked physical safe.
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 6: APPOINTMENTS -->
+  <div id="sec6" class="section">
+    <div class="card">
+      <div class="card-title">Upcoming Appointments</div>
+      <p class="section-intro">Track all scheduled visits, tests, and follow-ups. Check this sheet weekly.</p>
+      <table class="tbl">
+        <thead>
+          <tr><th>Date</th><th>Time</th><th>Provider / Specialist</th><th>Purpose</th><th>Location</th><th>Who's Taking</th><th>Done?</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><input type="text" placeholder="MM/DD"></td><td><input type="text" placeholder="9:00 AM"></td><td><input type="text" placeholder="Dr. name"></td><td><input type="text" placeholder="Reason for visit"></td><td><input type="text" placeholder="Office / hospital"></td><td><input type="text" placeholder="Caregiver name"></td><td><input type="checkbox"></td></tr>
+          <tr><td><input type="text" placeholder="MM/DD"></td><td><input type="text" placeholder="9:00 AM"></td><td><input type="text" placeholder="Dr. name"></td><td><input type="text" placeholder="Reason for visit"></td><td><input type="text" placeholder="Office / hospital"></td><td><input type="text" placeholder="Caregiver name"></td><td><input type="checkbox"></td></tr>
+          <tr><td><input type="text" placeholder="MM/DD"></td><td><input type="text" placeholder="9:00 AM"></td><td><input type="text" placeholder="Dr. name"></td><td><input type="text" placeholder="Reason for visit"></td><td><input type="text" placeholder="Office / hospital"></td><td><input type="text" placeholder="Caregiver name"></td><td><input type="checkbox"></td></tr>
+          <tr><td><input type="text" placeholder="MM/DD"></td><td><input type="text" placeholder="9:00 AM"></td><td><input type="text" placeholder="Dr. name"></td><td><input type="text" placeholder="Reason for visit"></td><td><input type="text" placeholder="Office / hospital"></td><td><input type="text" placeholder="Caregiver name"></td><td><input type="checkbox"></td></tr>
+          <tr><td><input type="text" placeholder="MM/DD"></td><td><input type="text" placeholder="9:00 AM"></td><td><input type="text" placeholder="Dr. name"></td><td><input type="text" placeholder="Reason for visit"></td><td><input type="text" placeholder="Office / hospital"></td><td><input type="text" placeholder="Caregiver name"></td><td><input type="checkbox"></td></tr>
+          <tr><td><input type="text" placeholder="MM/DD"></td><td><input type="text" placeholder="9:00 AM"></td><td><input type="text" placeholder="Dr. name"></td><td><input type="text" placeholder="Reason for visit"></td><td><input type="text" placeholder="Office / hospital"></td><td><input type="text" placeholder="Caregiver name"></td><td><input type="checkbox"></td></tr>
+          <tr><td><input type="text" placeholder="MM/DD"></td><td><input type="text" placeholder="9:00 AM"></td><td><input type="text" placeholder="Dr. name"></td><td><input type="text" placeholder="Reason for visit"></td><td><input type="text" placeholder="Office / hospital"></td><td><input type="text" placeholder="Caregiver name"></td><td><input type="checkbox"></td></tr>
+          <tr><td><input type="text" placeholder="MM/DD"></td><td><input type="text" placeholder="9:00 AM"></td><td><input type="text" placeholder="Dr. name"></td><td><input type="text" placeholder="Reason for visit"></td><td><input type="text" placeholder="Office / hospital"></td><td><input type="text" placeholder="Caregiver name"></td><td><input type="checkbox"></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Appointment Notes Log</div>
+      <table class="tbl">
+        <thead>
+          <tr><th>Date</th><th>Doctor / Specialist</th><th>Key Notes from Visit</th><th>Follow-Up Needed</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><input type="text" placeholder="MM/DD/YYYY"></td><td><input type="text" placeholder="Provider name"></td><td><input type="text" placeholder="What was discussed / decided"></td><td><input type="text" placeholder="Next steps"></td></tr>
+          <tr><td><input type="text" placeholder="MM/DD/YYYY"></td><td><input type="text" placeholder="Provider name"></td><td><input type="text" placeholder="What was discussed / decided"></td><td><input type="text" placeholder="Next steps"></td></tr>
+          <tr><td><input type="text" placeholder="MM/DD/YYYY"></td><td><input type="text" placeholder="Provider name"></td><td><input type="text" placeholder="What was discussed / decided"></td><td><input type="text" placeholder="Next steps"></td></tr>
+          <tr><td><input type="text" placeholder="MM/DD/YYYY"></td><td><input type="text" placeholder="Provider name"></td><td><input type="text" placeholder="What was discussed / decided"></td><td><input type="text" placeholder="Next steps"></td></tr>
+          <tr><td><input type="text" placeholder="MM/DD/YYYY"></td><td><input type="text" placeholder="Provider name"></td><td><input type="text" placeholder="What was discussed / decided"></td><td><input type="text" placeholder="Next steps"></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- SECTION 7: FAMILY NOTES -->
+  <div id="sec7" class="section">
+    <div class="card">
+      <div class="card-title">Family Caregiver Log</div>
+      <p class="section-intro">Use this sheet to coordinate between siblings and caregivers. Log daily observations, concerns, and updates.</p>
+      <table class="tbl">
+        <thead>
+          <tr><th>Date</th><th>Caregiver</th><th>Observations / Updates</th><th>Action Needed</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><input type="text" placeholder="MM/DD"></td><td><input type="text" placeholder="Your name"></td><td><input type="text" placeholder="How parent is doing, any changes noticed..."></td><td><input type="text" placeholder="What needs to happen next"></td></tr>
+          <tr><td><input type="text" placeholder="MM/DD"></td><td><input type="text" placeholder="Your name"></td><td><input type="text" placeholder="Observations..."></td><td><input type="text" placeholder="Action needed"></td></tr>
+          <tr><td><input type="text" placeholder="MM/DD"></td><td><input type="text" placeholder="Your name"></td><td><input type="text" placeholder="Observations..."></td><td><input type="text" placeholder="Action needed"></td></tr>
+          <tr><td><input type="text" placeholder="MM/DD"></td><td><input type="text" placeholder="Your name"></td><td><input type="text" placeholder="Observations..."></td><td><input type="text" placeholder="Action needed"></td></tr>
+          <tr><td><input type="text" placeholder="MM/DD"></td><td><input type="text" placeholder="Your name"></td><td><input type="text" placeholder="Observations..."></td><td><input type="text" placeholder="Action needed"></td></tr>
+          <tr><td><input type="text" placeholder="MM/DD"></td><td><input type="text" placeholder="Your name"></td><td><input type="text" placeholder="Observations..."></td><td><input type="text" placeholder="Action needed"></td></tr>
+          <tr><td><input type="text" placeholder="MM/DD"></td><td><input type="text" placeholder="Your name"></td><td><input type="text" placeholder="Observations..."></td><td><input type="text" placeholder="Action needed"></td></tr>
+          <tr><td><input type="text" placeholder="MM/DD"></td><td><input type="text" placeholder="Your name"></td><td><input type="text" placeholder="Observations..."></td><td><input type="text" placeholder="Action needed"></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Important Family Decisions & Agreements</div>
+      <div class="field-row single">
+        <div class="field"><label>Primary Caregiver</label><input type="text" placeholder="Name and relationship"></div>
+      </div>
+      <div class="field-row single">
+        <div class="field"><label>Backup Caregiver</label><input type="text" placeholder="Name and relationship"></div>
+      </div>
+      <div class="field-row single">
+        <div class="field"><label>Financial Decision Maker (POA)</label><input type="text" placeholder="Name and relationship"></div>
+      </div>
+      <div class="field-row single">
+        <div class="field"><label>Healthcare Decision Maker (Healthcare Proxy)</label><input type="text" placeholder="Name and relationship"></div>
+      </div>
+      <div class="field-row single">
+        <div class="field"><label>Family Agreements / Notes</label><textarea placeholder="Record any decisions made by the family about care arrangements, finances, living situation changes..."></textarea></div>
+      </div>
+    </div>
+
+    <div class="note-box">
+      💡 Tip: Share this toolkit link with all family caregivers so everyone is working from the same information. Each person fills in their own rows in the log above.
+    </div>
+  </div>
+
+</div><!-- end .main -->
+
+<div class="footer">ReadyFileStudio · Aging Parent Admin Toolkit · Personal Use Only · Digital Download</div>
+
 <script>
-var current = 0;
+// Bulletproof navigation — direct style.display switching
+var totalSections = 8;
 
-function show(n) {
-  for (var i = 0; i < 8; i++) {
-    var d = document.getElementById('doc' + i);
-    var b = document.querySelectorAll('.nav-btn')[i];
-    if (d) d.className = 'doc' + (i === n ? ' visible' : '');
-    if (b) b.className = 'nav-btn' + (i === n ? ' active' : '');
+function switchTab(index) {
+  // Hide all sections
+  for (var i = 0; i < totalSections; i++) {
+    var sec = document.getElementById('sec' + i);
+    if (sec) sec.style.display = 'none';
   }
-  current = n;
-}
 
-document.addEventListener('DOMContentLoaded', function() {
-  document.querySelectorAll('.nav-btn[data-idx]').forEach(function(btn) {
-    btn.addEventListener('click', function() { show(parseInt(this.getAttribute('data-idx'))); });
-  });
-});
+  // Show selected section
+  var active = document.getElementById('sec' + index);
+  if (active) active.style.display = 'block';
 
-var titles = [
-  '01-Emergency-Info-Sheet',
-  '02-Medical-History-Tracker',
-  '03-Medication-Log',
-  '04-Provider-Directory',
-  '05-Legal-Financial-Checklist',
-  '06-Appointment-Notes',
-  '07-Sibling-Coordination-Log',
-  '08-Quick-Start-Guide'
-];
-
-var brand = '<style>body{font-family:system-ui,sans-serif;max-width:800px;margin:40px auto;padding:0 24px;color:#1a1a1a;}table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:16px;}th{background:#E1F5EE;color:#085041;font-weight:500;padding:6px 8px;text-align:left;border:0.5px solid #9FE1CB;}td{padding:6px 8px;border:0.5px solid #ddd;height:28px;vertical-align:middle;}tr:nth-child(even) td{background:#f9f9f9;}.sh{font-size:11px;font-weight:600;color:#0F6E56;text-transform:uppercase;letter-spacing:0.07em;background:#E1F5EE;padding:4px 10px;border-radius:4px;margin:14px 0 8px;}.dh{border-bottom:2px solid #1D9E75;padding-bottom:10px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:flex-end;}.dt{font-size:18px;font-weight:600;}.db{font-size:11px;color:#1D9E75;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;}.nb{background:#f5f5f5;border-radius:6px;padding:10px 12px;font-size:12px;color:#555;margin:10px 0;}.nb-g{background:#E1F5EE;color:#085041;}.fg{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}.f{border-bottom:1px solid #ccc;padding-bottom:4px;}.fl{font-size:11px;color:#888;margin-bottom:2px;}.fv{height:20px;}.fa{height:40px;}.ci{display:flex;align-items:flex-start;gap:10px;padding:7px 0;border-bottom:0.5px solid #eee;}.cb{width:14px;height:14px;border:1.5px solid #aaa;border-radius:3px;flex-shrink:0;margin-top:2px;}.ct{font-size:13px;flex:1;}.cs{font-size:11px;color:#888;margin-top:2px;}.df{margin-top:16px;padding-top:8px;border-top:0.5px solid #eee;display:flex;justify-content:space-between;font-size:11px;color:#888;}@media print{body{margin:20px;padding:0;}}</style>';
-
-function getDocHTML(n) {
-  var el = document.getElementById('doc' + n);
-  return '<!DOCTYPE html><html><head><meta charset="utf-8"><title>' + titles[n] + '</title>' + brand + '</head><body>' + el.innerHTML + '
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script>
-var docTitles = [
-  'Emergency-Sheet',
-  'Medical-History',
-  'Medication-Log',
-  'Provider-Directory',
-  'Legal-Financial',
-  'Appointment-Notes',
-  'Sibling-Care-Log',
-  'Quick-Start-Guide'
-];
-
-function getActiveDocEl() {
-  return document.querySelector('.doc.visible');
-}
-
-function captureAndSave(el, filename) {
-  var btn = document.getElementById('dl-all');
-  var origText = btn ? btn.innerHTML : '';
-  
-  // Show loading state
-  var allBtns = document.querySelectorAll('.tbtn');
-  allBtns.forEach(function(b) { b.disabled = true; });
-  
-  // Scroll to top of doc
-  window.scrollTo(0, 0);
-  
-  html2canvas(el, {
-    scale: 2,
-    useCORS: true,
-    backgroundColor: '#f7f5f2',
-    logging: false,
-    windowWidth: 900
-  }).then(function(canvas) {
-    var { jsPDF } = window.jspdf;
-    var pdf = new jsPDF('p', 'mm', 'a4');
-    var pageW = pdf.internal.pageSize.getWidth();
-    var pageH = pdf.internal.pageSize.getHeight();
-    var margin = 10;
-    var contentW = pageW - margin * 2;
-    var imgH = (canvas.height * contentW) / canvas.width;
-    var position = margin;
-    var remainH = imgH;
-    var pageContentH = pageH - margin * 2;
-    var imgData = canvas.toDataURL('image/png');
-    
-    // Add first page
-    pdf.addImage(imgData, 'PNG', margin, position, contentW, imgH);
-    remainH -= pageContentH;
-    
-    // Add extra pages if content is tall
-    while (remainH > 0) {
-      pdf.addPage();
-      pdf.addImage(imgData, 'PNG', margin, margin - (imgH - remainH) - margin, contentW, imgH);
-      remainH -= pageContentH;
-    }
-    
-    pdf.save(filename + '.pdf');
-    allBtns.forEach(function(b) { b.disabled = false; });
-  }).catch(function(err) {
-    console.error('PDF error:', err);
-    allBtns.forEach(function(b) { b.disabled = false; });
-    alert('PDF generation failed. Please use Print > Save as PDF instead.');
-  });
-}
-
-function downloadDocPDF() {
-  var el = getActiveDocEl();
-  var idx = current;
-  captureAndSave(el, 'AgingParentToolkit-' + docTitles[idx]);
-}
-
-
-function downloadPDF() {
-  var btn = document.getElementById('dl-all');
-  btn.innerHTML = '<i class="ti ti-loader" style="font-size:14px;"></i> Generating... (1/8)';
-  btn.disabled = true;
-  
-  var idx = 0;
-  var { jsPDF } = window.jspdf;
-  var pdf = new jsPDF('p', 'mm', 'a4');
-  var pageW = pdf.internal.pageSize.getWidth();
-  var pageH = pdf.internal.pageSize.getHeight();
-  var margin = 10;
-  var contentW = pageW - margin * 2;
-  var pageContentH = pageH - margin * 2;
-  var isFirst = true;
-  
-  function captureNext() {
-    if (idx >= 8) {
-      pdf.save('Aging-Parent-Admin-Toolkit-Complete.pdf');
-      btn.innerHTML = '<i class="ti ti-file-type-pdf" style="font-size:14px;"></i>Download as PDF';
-      btn.disabled = false;
-      return;
-    }
-    
-    // Switch to this doc
-    show(idx);
-    btn.innerHTML = '<i class="ti ti-loader" style="font-size:14px;"></i> Generating... (' + (idx+1) + '/8)';
-    
-    setTimeout(function() {
-      var el = document.getElementById('doc' + idx);
-      html2canvas(el, {
-        scale: 2,
-        useCORS: true,
-        backgroundColor: '#ffffff',
-        logging: false,
-        windowWidth: 900
-      }).then(function(canvas) {
-        var imgData = canvas.toDataURL('image/png');
-        var imgH = (canvas.height * contentW) / canvas.width;
-        
-        if (!isFirst) pdf.addPage();
-        isFirst = false;
-        
-        pdf.addImage(imgData, 'PNG', margin, margin, contentW, imgH);
-        
-        // Handle multi-page content
-        var remainH = imgH - pageContentH;
-        while (remainH > 0) {
-          pdf.addPage();
-          pdf.addImage(imgData, 'PNG', margin, margin - (imgH - remainH) - margin, contentW, imgH);
-          remainH -= pageContentH;
-        }
-        
-        idx++;
-        captureNext();
-      });
-    }, 400);
+  // Update tab styles
+  var tabs = document.querySelectorAll('.nav-tab');
+  for (var j = 0; j < tabs.length; j++) {
+    tabs[j].classList.remove('active');
   }
-  
-  captureNext();
+  tabs[index].classList.add('active');
 }
+
+// Print current visible section
+function printCurrent() {
+  window.print();
+}
+
+// Save all as PDF prompt
+function saveAll() {
+  alert('To save as PDF:\n\n1. Press Ctrl+P (Windows) or Cmd+P (Mac)\n2. Change destination to "Save as PDF"\n3. Click Save\n\nThis will save the current sheet. Switch to each sheet and repeat to save all sections.');
+}
+
+// Initialize — make sure sec0 is visible, all others hidden
+window.onload = function() {
+  switchTab(0);
+};
 </script>
 
 </body>
